@@ -19,3 +19,7 @@ class HashTable(object):
 
     def size(self):
         return len(self.array)
+
+    def increment(self, key):
+        index = self.hash(key)
+        self.array[index][1] = self.array[index][1] + 1
