@@ -5,8 +5,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import timeit
 
-def createCMS(file):
-    pass
+def createCMS(num_hash, buckets, file):
+    cms = CountMinSketch(num_hash, buckets)
+
+    for line in file:
+        for word in line.split():
+            cms.insert(word)
+
+    return cms
 
 def createHT(file):
     pass
