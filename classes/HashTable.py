@@ -4,7 +4,7 @@ class HashTable(object):
 
     :param size: The size of the table we want to make.
     """
-    def __init__(self, size=64):
+    def __init__(self, size=32):
         self.array = [None] * size
         self.numElements = 0
 

@@ -9,7 +9,15 @@ def createCMS(file):
     pass
 
 def createHT(file):
-    pass
+    ht = HashTable()
+    for line in file:
+        for word in line.split():
+            try:
+                ht.insert(word, ht.find(word) + 1)
+                break
+            except KeyError:
+                ht.insert(word, 1)
+    return ht
 
 if __name__ == '__main__':
     # Open all the files (sorted from smallest to largest)
@@ -20,7 +28,6 @@ if __name__ == '__main__':
     monte = open("text\\countofmontecristo.txt", "r")
     war = open("text\\warandpeace.txt", "r")
     king = open("text\\kingjamesbible.txt", "r")
-
 
     tiny.close()
     cse.close()
