@@ -27,13 +27,21 @@ class HashTable(object):
     """
     def insert(self, key, value):
         index = self.hash(key)
-        while ((self.numElements != len(self.array)) and 
-               (self.array[index] is not None) and 
-               (self.array[index][0] != key)):
-            index = (index + 1) % len(self.array)
-        if (self.array[index] is None):
+
+        # If values have already been hashed to this index
+        if self.array[index] is not None:
+            # Check list to see if pair is there
+            for pair in self.array[index]:
+                if pair[0] == key:
+                    pair[1] = value
+                    break
+            else:
+                self.array[index].append([key, value])
+                self.numElements = self.numElements + 1
+        else:
+            self.array[index] = []
+            self.array[index].append([key, value])
             self.numElements = self.numElements + 1
-        self.array[index] = [key, value]
 
     """
     Given a key, returns the associated value with it.
@@ -46,13 +54,9 @@ class HashTable(object):
         if self.array[index] is None:
             raise KeyError()
         else:
-            for i in range(0, self.size()):
-                curr = (index + i) % len(self.array)
-                if ((self.array[curr] is not None) and
-                    (self.array[curr][0] == key)):
-                    return self.array[curr][1]
-                elif (self.array[curr] is None):
-                    raise KeyError()
+            for pair in self.array[index]:
+                if pair[0] == key:
+                    return pair[1]
             raise KeyError()
 
     """
@@ -62,3 +66,9 @@ class HashTable(object):
     """
     def size(self):
         return self.numElements
+
+    def __setitem__(self, key, value):
+        self.insert(key, value)
+
+    def __getitem__(self, key):
+        return self.find(key)
