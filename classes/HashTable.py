@@ -7,6 +7,7 @@ class HashTable(object):
     def __init__(self, size=32):
         self.array = [None] * size
         self.numElements = 0
+        self.uniqueSize = 0
 
     """
     Hashing function to determine spot in the Table
@@ -40,10 +41,11 @@ class HashTable(object):
                     break
             else:
                 self.array[index].append([key, value])
-                #self.numElements += 1
+                self.uniqueSize += 1
         else:
             self.array[index] = []
             self.array[index].append([key, value])
+            self.uniqueSize += 1
             self.numElements += 1
 
     """
@@ -68,7 +70,7 @@ class HashTable(object):
     :return: The number of elements in the Hash Table
     """
     def size(self):
-        return self.numElements
+        return self.uniqueSize
 
     def __setitem__(self, key, value):
         self.insert(key, value)
