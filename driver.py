@@ -25,6 +25,12 @@ def createHT(file):
                 ht.insert(word, 1)
     return ht
 
+def timeSearchCMS(cms, word):
+    pass
+
+def timeSearchHT(ht, word):
+    pass
+
 if __name__ == '__main__':
     # Open all the files (sorted from smallest to largest)
     tiny = open("text\\tiny_home-on-the-range.txt", "r")
@@ -34,6 +40,21 @@ if __name__ == '__main__':
     monte = open("text\\countofmontecristo.txt", "r")
     war = open("text\\warandpeace.txt", "r")
     king = open("text\\kingjamesbible.txt", "r")
+
+    start = timeit.timeit()
+    tiny_ht = createHT(tiny)
+    end = timeit.timeit()
+    print("tiny: " + str(end - start))
+
+    start1 = timeit.timeit()
+    cse_ht = createHT(cse)
+    end1 = timeit.timeit()
+    print("cse: " + str(end1 - start1))
+
+    start2 = timeit.timeit()
+    alice_ht = createHT(alice)
+    end2 = timeit.timeit()
+    print("alice: " + str(end2 - start2))
 
     tiny.close()
     cse.close()
