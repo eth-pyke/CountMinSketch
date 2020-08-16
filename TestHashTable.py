@@ -8,14 +8,14 @@ if __name__ == '__main__':
     print(ht.size())
 
     for i in range(26):
-        ht.insert(i, 0)
+        ht.insert(str(i), 0)
     for i in range(26):
-        print("key: " + str(i) + " value: " + str(ht.find(i)))
+        print("key: " + str(i) + " value: " + str(ht.find(str(i))))
 
     for i in range(26):
-        increment(ht, i)
-        print("key: " + str(i) + " value: " + str(ht.find(i)))
+        increment(ht, str(i))
+        print("key: " + str(i) + " value: " + str(ht.find(str(i))))
 
-    print(1 == ht.find(1))
+    print(ht.find(str(1)) == 1)
     print(ht.size())
     print(ht.find("abs"))

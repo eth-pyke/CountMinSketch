@@ -27,14 +27,16 @@ class HashTable(object):
     """
     def insert(self, key, value):
         index = self.hash(key)
+        while ((self.numElements != len(self.array)) and 
+               (self.array[index] is not None) and 
+               (self.array[index][0] != key)):
+            index = (index + 1) % len(self.array)
         if (self.array[index] is None):
             self.numElements = self.numElements + 1
         self.array[index] = [key, value]
 
     """
-    Given a key, returns the associated value with it.  If collisions occur,
-    could return a value associated with a different key.  If it hashs to the same
-    index.
+    Given a key, returns the associated value with it.
 
     :param key: The key whose value we are looking up.
     :return: The associated value of key.
@@ -44,7 +46,14 @@ class HashTable(object):
         if self.array[index] is None:
             raise KeyError()
         else:
-            return self.array[index][1]
+            for i in range(self.size()):
+                curr = (index + i) % len(self.array)
+                if ((self.array[curr] is not None) and
+                    (self.array[curr][0] == key)):
+                    return self.array[curr][1]
+                elif (self.array[curr] is None):
+                    raise KeyError()
+            raise KeyError()
 
     """
     Return number of elements within the Hash Table.
