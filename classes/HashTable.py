@@ -46,7 +46,7 @@ class HashTable(object):
         if self.array[index] is None:
             raise KeyError()
         else:
-            for i in range(self.size()):
+            for i in range(0, self.size()):
                 curr = (index + i) % len(self.array)
                 if ((self.array[curr] is not None) and
                     (self.array[curr][0] == key)):

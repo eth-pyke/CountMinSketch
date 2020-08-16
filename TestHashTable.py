@@ -17,5 +17,6 @@ if __name__ == '__main__':
         print("key: " + str(i) + " value: " + str(ht.find(str(i))))
 
     print(ht.find(str(1)) == 1)
-    print(ht.size())
-    print(ht.find("abs"))
+    print(ht.size() == 26)
+    increment(ht, str(25))
+    print(ht.find(str(25)) == 2)
