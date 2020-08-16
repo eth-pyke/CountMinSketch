@@ -4,7 +4,7 @@ class HashTable(object):
 
     :param size: The size of the table we want to make.
     """
-    def __init__(self, size=128):
+    def __init__(self, size=64):
         self.array = [None] * size
         self.numElements = 0
 
@@ -27,6 +27,9 @@ class HashTable(object):
     """
     def insert(self, key, value):
         index = self.hash(key)
+
+        if self.is_full():
+            self.resize()
 
         # If values have already been hashed to this index
         if self.array[index] is not None:
@@ -72,3 +75,15 @@ class HashTable(object):
 
     def __getitem__(self, key):
         return self.find(key)
+
+    def is_full(self):
+        return self.numElements > len(self.array)/2
+
+    def resize(self):
+        ht = HashTable(len(self.array) * 2)
+        for i in range(len(self.array)):
+            if self.array[i] is None:
+                continue
+            for pair in self.array[i]:
+                ht.insert(pair[0], pair[1])
+        self.array = ht.array
