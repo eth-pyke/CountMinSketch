@@ -40,11 +40,11 @@ class HashTable(object):
                     break
             else:
                 self.array[index].append([key, value])
-                self.numElements = self.numElements + 1
+                #self.numElements += 1
         else:
             self.array[index] = []
             self.array[index].append([key, value])
-            self.numElements = self.numElements + 1
+            self.numElements += 1
 
     """
     Given a key, returns the associated value with it.
@@ -82,8 +82,7 @@ class HashTable(object):
     def resize(self):
         ht = HashTable(len(self.array) * 2)
         for i in range(len(self.array)):
-            if self.array[i] is None:
-                continue
-            for pair in self.array[i]:
-                ht.insert(pair[0], pair[1])
+            if self.array[i] is not None:
+                for pair in self.array[i]:
+                    ht.insert(pair[0], pair[1])
         self.array = ht.array
