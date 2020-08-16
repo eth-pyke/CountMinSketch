@@ -1,9 +1,9 @@
 from classes.HashTable import HashTable
 from classes.CountMinSketch import CountMinSketch
+from timeit import default_timer as timer
 
 import numpy as np
 import matplotlib.pyplot as plt
-import timeit
 
 def createCMS(num_hash, buckets, file):
     cms = CountMinSketch(num_hash, buckets)
@@ -41,20 +41,20 @@ if __name__ == '__main__':
     war = open("text\\warandpeace.txt", "r")
     king = open("text\\kingjamesbible.txt", "r")
 
-    start = timeit.timeit()
+    start = timer()
     tiny_ht = createHT(tiny)
-    end = timeit.timeit()
+    end = timer()
     print("tiny: " + str(end - start))
 
-    start1 = timeit.timeit()
+    start = timer()
     cse_ht = createHT(cse)
-    end1 = timeit.timeit()
-    print("cse: " + str(end1 - start1))
+    end = timer()
+    print("cse: " + str(end - start))
 
-    start2 = timeit.timeit()
+    start = timer()
     alice_ht = createHT(alice)
-    end2 = timeit.timeit()
-    print("alice: " + str(end2 - start2))
+    end = timer()
+    print("alice: " + str(end - start))
 
     tiny.close()
     cse.close()
