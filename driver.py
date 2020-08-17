@@ -81,7 +81,7 @@ if __name__ == '__main__':
         for filename in filenames:
             filepath = "text/" + filename
             # insertion time
-            cms, cms_time = insertCMS(10, 500, filepath)
+            cms, cms_time = insertCMS(5, 272, filepath)
             ht, ht_time = insertHT(filepath)
 
             cms_init_times.append(cms_time)
