@@ -72,19 +72,26 @@ class HashTable(object):
         """
         return self.uniqueSize
 
-    def __setitem__(self, key, value):
-        self.insert(key, value)
-
-    def __getitem__(self, key):
-        return self.find(key)
-
     def is_full(self):
+        """
+        Determine if the HashTable needs to be resized.
+        
+        :return: True if full.
+        """
         return self.numElements > len(self.array)/2
 
     def resize(self):
+        """
+        Doubles size of the array in this HashTable and then
+        re-hashes all the elements within this into the newly
+        sized array.
+        """
         ht = HashTable(len(self.array) * 2)
+        self.uniqueSize = 0
         for i in range(len(self.array)):
             if self.array[i] is not None:
                 for pair in self.array[i]:
                     ht.insert(pair[0], pair[1])
         self.array = ht.array
+        self.uniqueSize = ht.uniqueSize
+        self.numElements = ht.numElements
