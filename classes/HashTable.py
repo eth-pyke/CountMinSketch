@@ -1,32 +1,32 @@
 class HashTable(object):
-    """
-    Initialize an array of the given size to store all the key value pairs.
-
-    :param size: The size of the table we want to make.
-    """
     def __init__(self, size=32):
+        """
+        Initialize an array of the given size to store all the key value pairs.
+
+        :param size: The size of the table we want to make.
+        """
         self.array = [None] * size
         self.numElements = 0
         self.uniqueSize = 0
 
-    """
-    Hashing function to determine spot in the Table
-
-    :param key: The key to be hashed.
-    :return: The resulting index in self.array.
-    """
     def hash(self, key):
+        """
+        Hashing function to determine spot in the Table
+
+        :param key: The key to be hashed.
+        :return: The resulting index in self.array.
+        """
         length = len(self.array)
         return hash(key) % length
 
-    """
-    Insert a key value pair into the Hash Table in the form of a 2
-    element array.
-
-    :param key: The key to be hashed.
-    :param value: The value associated with the key. 
-    """
     def insert(self, key, value):
+        """
+        Insert a key value pair into the Hash Table in the form of a 2
+        element array.
+
+        :param key: The key to be hashed.
+        :param value: The value associated with the key. 
+        """
         index = self.hash(key)
 
         if self.is_full():
@@ -48,13 +48,13 @@ class HashTable(object):
             self.uniqueSize += 1
             self.numElements += 1
 
-    """
-    Given a key, returns the associated value with it.
-
-    :param key: The key whose value we are looking up.
-    :return: The associated value of key.
-    """
     def find(self, key):
+        """
+        Given a key, returns the associated value with it.
+
+        :param key: The key whose value we are looking up.
+        :return: The associated value of key.
+        """
         index = self.hash(key)
         if self.array[index] is None:
             raise KeyError()
@@ -64,12 +64,12 @@ class HashTable(object):
                     return pair[1]
             raise KeyError()
 
-    """
-    Return number of elements within the Hash Table.
-
-    :return: The number of elements in the Hash Table
-    """
     def size(self):
+        """
+        Return number of elements within the Hash Table.
+
+        :return: The number of elements in the Hash Table
+        """
         return self.uniqueSize
 
     def __setitem__(self, key, value):
