@@ -81,7 +81,7 @@ if __name__ == '__main__':
         for filename in filenames:
             filepath = "text/" + filename
             # insertion time
-            cms, cms_time = insertCMS(10, 100, filepath)
+            cms, cms_time = insertCMS(10, 500, filepath)
             ht, ht_time = insertHT(filepath)
 
             cms_init_times.append(cms_time)
@@ -98,16 +98,15 @@ if __name__ == '__main__':
             print("     (HT) actual count \"the\": {}".format(ht_count))
             print("     (CMS) estimated count \"the\": {}".format(cms_count))
 
-        iplot.plot(filewordcounts, ht_init_times, 'bo', filewordcounts, ht_init_times, 'b')
+        iplot.plot(filewordcounts, ht_init_times, 'bo', filewordcounts, ht_init_times, 'b--')
         iplot.plot(filewordcounts, cms_init_times, 'rs', filewordcounts, cms_init_times, 'r')
 
-        splot.plot(filewordcounts, ht_search_times, 'bo', filewordcounts, ht_search_times, 'b')
+        splot.plot(filewordcounts, ht_search_times, 'bo', filewordcounts, ht_search_times, 'b--')
         splot.plot(filewordcounts, cms_search_times, 'rs', filewordcounts, cms_search_times, 'r')
 
     iplot.set_ylabel('Insertion Time (seconds)')
     splot.set_ylabel('Search Time (seconds)')
     splot.set_xlabel('Number of Words Inserted')
     fig.suptitle('CMS vs HashTable Time')
-    fig.show()
-    fig.savefig('cms_ht_time.png')
+    fig.savefig('cms_ht_time.png', bbox_inches='tight')
     
