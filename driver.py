@@ -65,31 +65,49 @@ if __name__ == '__main__':
     moby = "mobydick.txt"
     monte = "countofmontecristo.txt"
     war = "warandpeace.txt"
-    bible = "kingjamesbible.txt"
-    filenames = [tiny, cse, alice, moby, monte]
-    filewordcounts = [9, 170, 29455, 215133, 462169, 565450, 824146]
+    filenames = [cse, alice, moby, monte, war]
+    filewordcounts = [170, 29455, 215133, 462169, 565450]
 
-    # HT vs (10x10)CMS
-    ht_init_times = []
-    cms10x10_init_times = []
-    ht_search_times = []
-    cms10x10_search_times = []
-    for filename in filenames:
-        filepath = "text/" + filename
-        # insertion time
-        cms, cms_time = insertCMS(10, 100, filepath)
-        ht, ht_time = insertHT(filepath)
+    ntrials = 3
 
-        cms10x10_init_times.append(cms_time)
-        ht_init_times.append(ht_time)
+    # HT vs CMS Insertion
+    # plt.figure()
+    fig, (iplot, splot) = plt.subplots(2,1)
+    for i in range(ntrials):
+        ht_init_times = []
+        cms_init_times = []
+        ht_search_times = []
+        cms_search_times = []
+        for filename in filenames:
+            filepath = "text/" + filename
+            # insertion time
+            cms, cms_time = insertCMS(10, 100, filepath)
+            ht, ht_time = insertHT(filepath)
 
-        # search time
-        cms_count, cms_search_time = searchCMS(cms, "the")
-        ht_count, ht_search_time = searchHT(ht, "the")
+            cms_init_times.append(cms_time)
+            ht_init_times.append(ht_time)
 
-        cms10x10_search_times.append(cms_search_time)
-        ht_search_times.append(ht_search_time)
+            # search time
+            cms_count, cms_search_time = searchCMS(cms, "the")
+            ht_count, ht_search_time = searchHT(ht, "the")
 
-        print("{} has {} distinct words".format(filename, ht.size()))
-        print("     (HT) actual count \"the\": {}".format(ht_count))
-        print("     (CMS) estimated count \"the\": {}".format(cms_count))
+            cms_search_times.append(cms_search_time)
+            ht_search_times.append(ht_search_time)
+
+            print("{} has {} distinct words".format(filename, ht.size()))
+            print("     (HT) actual count \"the\": {}".format(ht_count))
+            print("     (CMS) estimated count \"the\": {}".format(cms_count))
+
+        iplot.plot(filewordcounts, ht_init_times, 'bo', filewordcounts, ht_init_times, 'b')
+        iplot.plot(filewordcounts, cms_init_times, 'rs', filewordcounts, cms_init_times, 'r')
+
+        splot.plot(filewordcounts, ht_search_times, 'bo', filewordcounts, ht_search_times, 'b')
+        splot.plot(filewordcounts, cms_search_times, 'rs', filewordcounts, cms_search_times, 'r')
+
+    iplot.set_ylabel('Insertion Time (seconds)')
+    splot.set_ylabel('Search Time (seconds)')
+    splot.set_xlabel('Number of Words Inserted')
+    fig.suptitle('CMS vs HashTable Time')
+    fig.show()
+    fig.savefig('cms_ht_time.png')
+    
