@@ -87,8 +87,11 @@ class HashTable(object):
         sized array.
         """
         ht = HashTable(len(self.array) * 2)
+        self.uniqueSize = 0
         for i in range(len(self.array)):
             if self.array[i] is not None:
                 for pair in self.array[i]:
                     ht.insert(pair[0], pair[1])
         self.array = ht.array
+        self.uniqueSize = ht.uniqueSize
+        self.numElements = ht.numElements

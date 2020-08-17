@@ -4,6 +4,8 @@ from timeit import default_timer as timer
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import re
 
 """
 returns 
@@ -16,6 +18,7 @@ def insertCMS(num_hash, buckets, filepath):
 
     for line in file:
         for word in line.split():
+            word = re.sub(r'[^\w\s]', '', word)
             cms.insert(word)
 
     end = timer()
@@ -31,6 +34,7 @@ def insertHT(filepath):
 
     for line in file:
         for word in line.split():
+            word = re.sub(r'[^\w\s]', '', word)
             try:
                 ht.insert(word, ht.find(word) + 1)
                 continue
@@ -106,6 +110,13 @@ if __name__ == '__main__':
     iplot.set_ylabel('Insertion Time (seconds)')
     splot.set_ylabel('Search Time (seconds)')
     splot.set_xlabel('Number of Words Inserted')
+    
+    # Legend
+    red_patch = mpatches.Patch(color='red', label='Count-Min Sketch')
+    blue_patch = mpatches.Patch(color='blue', label='Hash Table')
+    iplot.legend(handles=[red_patch, blue_patch])
+    splot.legend(handles=[red_patch, blue_patch])
+    
     fig.suptitle('CMS vs HashTable Time')
     fig.savefig('cms_ht_time.png', bbox_inches='tight')
     
