@@ -5,17 +5,30 @@ from timeit import default_timer as timer
 import numpy as np
 import matplotlib.pyplot as plt
 
-def createCMS(num_hash, buckets, file):
+"""
+returns 
+"""
+def insertCMS(num_hash, buckets, filepath):
+    file = open(filepath, "r")
+    start = timer()
+
     cms = CountMinSketch(num_hash, buckets)
 
     for line in file:
         for word in line.split():
             cms.insert(word)
 
-    return cms
+    end = timer()
+    file.close()
+    time = end - start
+    return cms, time
 
-def createHT(file):
+def insertHT(filepath):
+    file = open(filepath, "r")
+    start = timer()
+    
     ht = HashTable()
+
     for line in file:
         for word in line.split():
             try:
@@ -23,52 +36,60 @@ def createHT(file):
                 continue
             except KeyError:
                 ht.insert(word, 1)
-                
-    return ht
 
-def timeSearchCMS(cms, word):
-    pass
-
-def timeSearchHT(ht, word):
-    start = timer()
-    print(ht.find(word))
     end = timer()
-    return end - start
+    file.close()
+    time = end - start
+    return ht, time
+
+def searchCMS(cms, word):
+    start = timer()
+    count = cms.count(word)
+    end = timer()
+    time = end - start
+    return count, time
+
+def searchHT(ht, word):
+    start = timer()
+    count = ht.find(word)
+    end = timer()
+    time = end - start
+    return count, time
 
 if __name__ == '__main__':
     # Open all the files (sorted from smallest to largest)
-    tiny = open("text/tiny_home-on-the-range.txt", "r")
-    cse = open("text/CSE312.txt", "r")
-    alice = open("text/aliceinwonderland.txt", "r")
-    moby = open("text/mobydick.txt", "r")
-    monte = open("text/countofmontecristo.txt", "r")
-    war = open("text/warandpeace.txt", "r")
-    king = open("text/kingjamesbible.txt", "r")
+    # tiny = open("text/tiny_home-on-the-range.txt", "r")
+    tiny = "tiny.txt"
+    cse = "cse312.txt"
+    alice = "aliceinwonderland.txt"
+    moby = "mobydick.txt"
+    monte = "countofmontecristo.txt"
+    war = "warandpeace.txt"
+    bible = "kingjamesbible.txt"
+    filenames = [tiny, cse, alice, moby, monte]
+    filewordcounts = [9, 170, 29455, 215133, 462169, 565450, 824146]
 
-    start = timer()
-    tiny_ht = createHT(tiny)
-    end = timer()
-    print("tiny: " + str(end - start))
+    # HT vs (10x10)CMS
+    ht_init_times = []
+    cms10x10_init_times = []
+    ht_search_times = []
+    cms10x10_search_times = []
+    for filename in filenames:
+        filepath = "text/" + filename
+        # insertion time
+        cms, cms_time = insertCMS(10, 100, filepath)
+        ht, ht_time = insertHT(filepath)
 
-    start = timer()
-    cse_ht = createHT(cse)
-    end = timer()
-    print("cse: " + str(end - start))
+        cms10x10_init_times.append(cms_time)
+        ht_init_times.append(ht_time)
 
-    start = timer()
-    alice_ht = createHT(alice)
-    end = timer()
-    print("alice: " + str(end - start))
+        # search time
+        cms_count, cms_search_time = searchCMS(cms, "the")
+        ht_count, ht_search_time = searchHT(ht, "the")
 
-    start = timer()
-    moby_ht = createHT(moby)
-    end = timer()
-    print("moby: " + str(end - start))
+        cms10x10_search_times.append(cms_search_time)
+        ht_search_times.append(ht_search_time)
 
-    tiny.close()
-    cse.close()
-    alice.close()
-    moby.close()
-    monte.close()
-    war.close()
-    king.close()
+        print("{} has {} distinct words".format(filename, ht.size()))
+        print("     (HT) actual count \"the\": {}".format(ht_count))
+        print("     (CMS) estimated count \"the\": {}".format(cms_count))
