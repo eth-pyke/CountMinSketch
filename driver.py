@@ -59,7 +59,6 @@ def searchHT(ht, word):
 if __name__ == '__main__':
     # Open all the files (sorted from smallest to largest)
     # tiny = open("text/tiny_home-on-the-range.txt", "r")
-    tiny = "tiny.txt"
     cse = "cse312.txt"
     alice = "aliceinwonderland.txt"
     moby = "mobydick.txt"
@@ -99,10 +98,10 @@ if __name__ == '__main__':
             print("     (CMS) estimated count \"the\": {}".format(cms_count))
 
         iplot.plot(filewordcounts, ht_init_times, 'bo', filewordcounts, ht_init_times, 'b--')
-        iplot.plot(filewordcounts, cms_init_times, 'rs', filewordcounts, cms_init_times, 'r')
+        iplot.plot(filewordcounts, cms_init_times, 'rs', filewordcounts, cms_init_times, 'r--')
 
         splot.plot(filewordcounts, ht_search_times, 'bo', filewordcounts, ht_search_times, 'b--')
-        splot.plot(filewordcounts, cms_search_times, 'rs', filewordcounts, cms_search_times, 'r')
+        splot.plot(filewordcounts, cms_search_times, 'rs', filewordcounts, cms_search_times, 'r--')
 
     iplot.set_ylabel('Insertion Time (seconds)')
     splot.set_ylabel('Search Time (seconds)')
