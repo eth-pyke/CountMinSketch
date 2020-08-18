@@ -2,7 +2,7 @@ import numpy as np
 import hashlib
 
 class CountMinSketch(object):
-    def __init__(self, num_hash, buckets):
+    def __init__(self, num_hash=5, buckets=272):
         """
         Initialize a [num_hash x buckets] table with all zeroes.
 
