@@ -13,7 +13,6 @@ returns
 def insertCMS(num_hash, buckets, filepath):
     file = open(filepath, "r")
     start = timer()
-
     cms = CountMinSketch(num_hash, buckets)
 
     for line in file:
@@ -113,13 +112,14 @@ if __name__ == '__main__':
             cms_search_times.append(cms_search_time)
             ht_search_times.append(ht_search_time)
 
-            # print("{} has {} distinct words".format(filename, ht.size()))
-            # print("     (HT) actual count \"the\": {}".format(ht_count))
-            # print("     (CMS) estimated count \"the\": {}".format(cms_count))
+            print("{} has {} distinct words".format(filename, ht.size()))
+            print("     (HT) actual count \"the\": {}".format(ht_count))
+            print("     (CMS) estimated count \"the\": {}".format(cms_count))
             actual_counts_sub.append(ht_count)
             estimate_counts_sub.append(cms_count)
             unique_counts_sub.append([ht.size(), ht.size(), 272 * 5])
 
+        # Build line graph for time comparisons
         iplot.plot(filewordcounts, ht_init_times, 'bo', filewordcounts, ht_init_times, 'b--')
         iplot.plot(filewordcounts, cms_init_times, 'rs', filewordcounts, cms_init_times, 'r--')
 
@@ -130,24 +130,25 @@ if __name__ == '__main__':
         estimate_counts = estimate_counts_sub
         unique_counts = unique_counts_sub
 
-    # Build line graph for time comparisons
+    # Set information for line graph
     iplot.set_ylabel('Insertion Time (seconds)')
     splot.set_ylabel('Search Time (seconds)')
     splot.set_xlabel('Number of Words Inserted')
+    fig1.suptitle('CMS vs HashTable Time')
     
-    # Legend
+    # Set up legend for line graph
     red_patch = mpatches.Patch(color='red', label='Count-Min Sketch')
     blue_patch = mpatches.Patch(color='blue', label='Hash Table')
     iplot.legend(handles=[red_patch, blue_patch])
     splot.legend(handles=[red_patch, blue_patch])
     
-    fig1.suptitle('CMS vs HashTable Time')
-    fig1.savefig('cms_ht_time.png', bbox_inches='tight')
+    fig1.tight_layout()
+    fig1.savefig('cms_ht_time.png')
 
 
     # Build bar graph for actual vs est comparisons
     x = np.arange(len(filenames))  # the label locations
-    width = 0.4  # width of the bars
+    width = 0.45  # width of the bars
 
     fig2, ax = plt.subplots()
     rects1 = ax.bar(x - width/2, actual_counts, width, label='Actual')
