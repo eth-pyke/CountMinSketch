@@ -1,14 +1,14 @@
 # CountMinSketch
 
-Count-Min Sketch is a Python Data Structure used to determine the frequency of items within large sets of data.  Also included in this is a Python implementation of a Hash Table so that the two data structures can be compared.
+Count-Min Sketch is a Python Data Structure used to determine the frequency of items within large sets of data. Also included in this is a Python implementation of a Hash Table so that the two data structures can be compared.
 # Description
 
-driver.py: Main file to collect data on the comparison between the Count-Min Sketch and the Hash Table.\n
-requirements.txt: File containing required python imports.\n
-TestCMS.py: Test file for CMS.\n
-TestHashTable.py: Test file for HT.\n
-./text: Folder containing test files we test on.\n
-./classes: Folder containing CountMinSketch and HashTable implementations.
+driver.py: Main file to collect data on the comparison between the Count-Min Sketch and the Hash Table.  
+requirements.txt: File containing required python imports.  
+TestCMS.py: Test file for CMS.  
+TestHashTable.py: Test file for HT.  
+./text: Folder containing test files we test on.  
+./classes: Folder containing CountMinSketch and HashTable implementations.  
 
 # Usage
 
