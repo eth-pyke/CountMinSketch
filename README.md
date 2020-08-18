@@ -12,7 +12,7 @@ TestHashTable.py: Test file for HT.
 
 # Usage
 
-The file driver.py contains comparison results between the Count-Min Sketch and the Hash Table and can be ran by doing:
+The file driver.py contains comparison results between the Count-Min Sketch and the Hash Table, and it can be run with the following command:
 
 ```bash
 python driver.py
