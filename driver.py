@@ -88,6 +88,7 @@ if __name__ == '__main__':
     fig1, (iplot, splot) = plt.subplots(2,1)
     actual_counts = []
     estimate_counts = []
+    unique_counts = []
     for i in range(ntrials):
         ht_init_times = []
         cms_init_times = []
@@ -95,6 +96,7 @@ if __name__ == '__main__':
         cms_search_times = []
         actual_counts_sub = []
         estimate_counts_sub = []
+        unique_counts_sub = []
         for filename in filenames:
             filepath = "text/" + filename
             # insertion time
@@ -116,6 +118,7 @@ if __name__ == '__main__':
             # print("     (CMS) estimated count \"the\": {}".format(cms_count))
             actual_counts_sub.append(ht_count)
             estimate_counts_sub.append(cms_count)
+            unique_counts_sub.append([ht.size(), ht.size(), 272 * 5])
 
         iplot.plot(filewordcounts, ht_init_times, 'bo', filewordcounts, ht_init_times, 'b--')
         iplot.plot(filewordcounts, cms_init_times, 'rs', filewordcounts, cms_init_times, 'r--')
@@ -125,6 +128,7 @@ if __name__ == '__main__':
 
         actual_counts = actual_counts_sub
         estimate_counts = estimate_counts_sub
+        unique_counts = unique_counts_sub
 
     # Build line graph for time comparisons
     iplot.set_ylabel('Insertion Time (seconds)')
@@ -159,4 +163,27 @@ if __name__ == '__main__':
     fig2.tight_layout()
     fig2.suptitle('Actual Count vs Estimated Count')
     fig2.savefig('cms_actual_estimate.png')
+
+    # Build table for space used comparisons
+    plt.figure(linewidth=2)
+    columns = ('Unique Elements', 'Hash Table', 'CMS')
+    rows = ('CSE312', 'Alice in Wonderland', 'Moby Dick', 
+               'Count of Monte Cristo', 'War and Peace')
+    rcolors = plt.cm.BuPu(np.full(len(rows), 0.1))
+    ccolors = plt.cm.BuPu(np.full(len(columns), 0.1))
+
+    table = plt.table(cellText=unique_counts, rowLabels=rows, rowColours=rcolors,
+                      rowLoc='right', colColours=ccolors, colLabels=columns, loc='center')
+    ax = plt.gca()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
+    plt.box(on=None)
+    plt.suptitle('Space Usage')
+    plt.draw()
+    fig3 = plt.gcf()
+    fig3.tight_layout()
+    plt.savefig('space_usage.png', dpi=150)
+
+
     
